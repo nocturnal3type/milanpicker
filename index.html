@@ -1,5 +1,58 @@
 <html>
 
-  hi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Milan Picker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background: #4b6cb7;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #395591;
+    }
+
+    #output {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Milan Picker</h1>
+  <button onclick="pickRandom()">Pick Random</button>
+  <div id="output">–</div>
+
+  <script>
+    function pickRandom() {
+      const options = ['원본밀', '시칠밀', '향밀', '마탑밀', '차이나밀', '회사밀', '고딩밀'];
+      const randomValue = options[Math.floor(Math.random() * options.length)];
+      document.getElementById('output').textContent = randomValue;
+    }
+  </script>
+</body>
+</html>
   
 </html>
