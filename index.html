@@ -1,21 +1,23 @@
-<html>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Milan Picker</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Pretendard", Arial, sans-serif;
       background: #fafafa;
       height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 20px;
+      gap: 16px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
     }
 
     button {
@@ -37,16 +39,67 @@
       font-size: 2rem;
       font-weight: bold;
       color: #333;
+      min-height: 2rem;
+    }
+
+    #copyMessage {
+      color: green;
+      font-size: 0.9rem;
+      visibility: hidden;
     }
   </style>
 </head>
 <body>
   <h1>Milan Picker</h1>
   <button onclick="pickRandom()">Pick Random</button>
+  <button onclick="copyResult()">Copy Result</button>
+
   <div id="output">–</div>
+  <div id="copyMessage">Copied!</div>
 
   <script>
+    let currentResult = '';
+
     function pickRandom() {
+      const options = ['원본밀', '시칠밀', '향밀', '마탑밀', '차이나밀', '회사밀', '고딩밀'];
+      const randomValue = options[Math.floor(Math.random() * options.length)];
+      currentResult = randomValue;
+      document.getElementById('output').textContent = randomValue;
+    }
+
+    function formatDate() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth() + 1;
+      const day = now.getDate();
+
+      // 시간 표시 (오전/오후)
+      let hour = now.getHours();
+      const minute = String(now.getMinutes()).padStart(2, '0');
+      const ampm = hour >= 12 ? '오후' : '오전';
+      if (hour > 12) hour -= 12;
+      if (hour === 0) hour = 12;
+
+      return `[${year}년 ${month}월 ${day}일 ${ampm}${hour}:${minute}]`;
+    }
+
+    async function copyResult() {
+      if (!currentResult) return alert('먼저 밀란을 뽑아주세요!');
+      const textToCopy = `${formatDate()} 당신이 뽑은 밀란은 ${currentResult}`;
+      try {
+        await navigator.clipboard.writeText(textToCopy);
+        const msg = document.getElementById('copyMessage');
+        msg.style.visibility = 'visible';
+        msg.textContent = '복사 완료!';
+        setTimeout(() => (msg.style.visibility = 'hidden'), 1500);
+      } catch (err) {
+        alert('복사 실패 😢');
+      }
+    }
+  </script>
+</body>
+</html>
+
       const options = ['원본밀', '시칠밀', '향밀', '마탑밀', '차이나밀', '회사밀', '고딩밀'];
       const randomValue = options[Math.floor(Math.random() * options.length)];
       document.getElementById('output').textContent = randomValue;
